@@ -1,0 +1,6 @@
+framework module DryAliyunOSS_iOS {
+  umbrella header "DryAliyunOSS-iOS-umbrella.h"
+
+  export *
+  module * { export * }
+}

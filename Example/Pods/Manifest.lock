@@ -1,0 +1,23 @@
+PODS:
+  - AliyunOSSiOS (2.10.7)
+  - DryAliyunOSS-iOS (0.0.1):
+    - AliyunOSSiOS
+
+DEPENDENCIES:
+  - DryAliyunOSS-iOS (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - AliyunOSSiOS
+
+EXTERNAL SOURCES:
+  DryAliyunOSS-iOS:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  AliyunOSSiOS: 602b6a4e70e62a5f0a6431c20496343141d7e66f
+  DryAliyunOSS-iOS: 1a0eb0660b2946ea744976fa4c41cc57a1184eba
+
+PODFILE CHECKSUM: 16c845d0b8c53671cf400cb905823dec68c7ebd4
+
+COCOAPODS: 1.8.0.beta.2
