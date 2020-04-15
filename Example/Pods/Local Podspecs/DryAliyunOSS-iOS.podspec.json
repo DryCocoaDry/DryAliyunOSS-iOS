@@ -1,6 +1,6 @@
 {
   "name": "DryAliyunOSS-iOS",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "summary": "DryAliyunOSS-iOS",
   "homepage": "https://github.com/duanruiying/DryAliyunOSS-iOS",
   "license": {
@@ -12,7 +12,7 @@
   },
   "source": {
     "git": "https://github.com/duanruiying/DryAliyunOSS-iOS.git",
-    "tag": "0.0.1"
+    "tag": "0.0.2"
   },
   "description": "TODO: iOS阿里云OSS.",
   "swift_versions": "5.0",

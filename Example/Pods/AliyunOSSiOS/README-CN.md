@@ -16,7 +16,7 @@
 
 需要引入OSS iOS SDK framework。
 
-您可以在MacOS系统中直接使用在本工程生成framwork：
+您可以在MacOS系统中直接使用本工程，选择对应的scheme为AliyunOSSSDK OSX，然后生成framwork：
 
 ```bash
 # clone工程
@@ -26,15 +26,15 @@ $ git clone git@github.com:aliyun/aliyun-oss-ios-sdk.git
 $ cd aliyun-oss-ios-sdk
 
 # 执行打包脚本
-$ sh ./buildFramework.sh
+$ sh ./buildiOSFramework.sh
 
 # 进入打包生成目录，AliyunOSSiOS.framework生成在该目录下
 $ cd Products && ls
 ```
 
-注意：buildFramework.sh脚本生成的framework是支持i386,x86_64,armv7,arm64架构的版本，所以当您需要archive product时，需要直接使用工程文件生成只支持真机的framework版本。
-
 在Xcode中，直接把framework拖入您对应的Target下即可，在弹出框勾选`Copy items if needed`。
+
+**注意：buildiOSFramework.sh脚本生成的framework是支持i386,x86_64,armv7,arm64架构的版本，所以当您需要archive product时，需要直接使用工程文件生成只支持真机的framework版本。**
 
 ### Pod依赖
 
@@ -99,7 +99,7 @@ OSSTask * task = [client getObject:get];
 也可以等待这个Task完成，以实现同步等待，如：
 
 ```
-[task waitUntilFinished];
+[task waitUntilFinished];	// 调用此方法时会阻塞当前线程直到task完成
 
 ...
 ```
@@ -118,12 +118,48 @@ demo示例: [点击查看](https://github.com/alibaba/alicloud-ios-demo)。
 
 在移动环境下，我们推荐STS鉴权模式来初始化OSSClient。鉴权细节详见后面链接给出的官网完整文档的`访问控制`章节。
 
+**注意: 如果您的应用只用到一个[数据中心](https://help.aliyun.com/document_detail/31837.html)下的bucket,建议保持OSSClient实例与应用程序的生命周期一致(比如在Appdelegate.m的 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions])中进行初始化，如下所示:**
+
 ```objc
-NSString *endpoint = @"https://oss-cn-hangzhou.aliyuncs.com";
+@interface AppDelegate ()
 
-id<OSSCredentialProvider> credential = [[OSSStsTokenCredentialProvider alloc] initWithAccessKeyId:@"<StsToken.AccessKeyId>" secretKeyId:@"<StsToken.SecretKeyId>" securityToken:@"<StsToken.SecurityToken>"];
+@property (nonatomic, strong) OSSClient *client;
 
-client = [[OSSClient alloc] initWithEndpoint:endpoint credentialProvider:credential];
+@end
+
+/**
+ * 获取sts信息的url,配置在业务方自己的搭建的服务器上。详情可见https://help.aliyun.com/document_detail/31920.html
+ */
+#define OSS_STS_URL                 @"oss_sts_url"
+
+
+/**
+ * bucket所在的region的endpoint,详情可见https://help.aliyun.com/document_detail/31837.html
+ */
+#define OSS_ENDPOINT                @"your bucket's endpoint"
+
+@implementation AppDelegate
+
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    // Override point for customization after application launch.
+    
+    // 初始化OSSClient实例
+    [self setupOSSClient];
+    
+    return YES;
+}
+
+- (void)setupOSSClient {
+
+    // 初始化具有自动刷新的provider
+    OSSAuthCredentialProvider *credentialProvider = [[OSSAuthCredentialProvider alloc] initWithAuthServerUrl:OSS_STS_URL];
+    
+    // client端的配置,如超时时间，开启dns解析等等
+    OSSClientConfiguration *cfg = [[OSSClientConfiguration alloc] init];
+    
+    _client = [[OSSClient alloc] initWithEndpoint:OSS_ENDPOINT credentialProvider:credentialProvider clientConfiguration:cfg];
+}
 
 ```
 
@@ -192,12 +228,12 @@ OSSTask * getTask = [client getObject:request];
 
 ## 完整文档
 
-SDK提供进阶的上传、下载功能、断点续传，以及文件管理、Bucket管理等功能。详见官方完整文档：[点击查看](http://help.aliyun.com/document_detail/oss/sdk/ios-sdk/preface.html?spm=5176.product8314910_oss.4.30.tK2G02)
+SDK提供进阶的上传、下载功能、断点续传，以及文件管理、Bucket管理等功能。详见官方完整文档：[点击查看](https://help.aliyun.com/document_detail/32055.html)
 
 
 ## API文档
 
-[点击查看](http://aliyun.github.io/aliyun-oss-ios-sdk/)
+[点击查看](https://help.aliyun.com/document_detail/31947.html)
 
 ## 常见问题
 
@@ -206,8 +242,6 @@ SDK提供进阶的上传、下载功能、断点续传，以及文件管理、Bu
 ​	Xcode9中默认支持的架构是armv7/arm64,由于arm是向下兼容的，armv7的库在需要支持armv7s的app中也是适用的，如果仍然需要针对armv7s进行优化，那么需要如下图进行设置
 
 ![list1](https://github.com/aliyun/aliyun-oss-ios-sdk/blob/master/Images/list1.png)
-
-
 
 ## License
 

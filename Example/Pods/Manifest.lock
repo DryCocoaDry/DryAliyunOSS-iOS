@@ -1,13 +1,13 @@
 PODS:
-  - AliyunOSSiOS (2.10.7)
-  - DryAliyunOSS-iOS (0.0.1):
+  - AliyunOSSiOS (2.10.8)
+  - DryAliyunOSS-iOS (0.0.2):
     - AliyunOSSiOS
 
 DEPENDENCIES:
   - DryAliyunOSS-iOS (from `../`)
 
 SPEC REPOS:
-  trunk:
+  https://github.com/CocoaPods/Specs.git:
     - AliyunOSSiOS
 
 EXTERNAL SOURCES:
@@ -15,9 +15,9 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  AliyunOSSiOS: 602b6a4e70e62a5f0a6431c20496343141d7e66f
-  DryAliyunOSS-iOS: 1a0eb0660b2946ea744976fa4c41cc57a1184eba
+  AliyunOSSiOS: 8db92936545593b9e5c66d680ef2ac0738946651
+  DryAliyunOSS-iOS: 132f25da1513b62520060712c691dd621c2bb04c
 
-PODFILE CHECKSUM: 16c845d0b8c53671cf400cb905823dec68c7ebd4
+PODFILE CHECKSUM: e8f8794cb2f8612aeccdf56e040a9b72f09cade4
 
-COCOAPODS: 1.8.0.beta.2
+COCOAPODS: 1.9.1
