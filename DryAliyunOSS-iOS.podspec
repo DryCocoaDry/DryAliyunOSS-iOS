@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   
   # Git
   s.name        = 'DryAliyunOSS-iOS'
-  s.version     = '0.0.2'
+  s.version     = '1.0.0'
   s.summary     = 'DryAliyunOSS-iOS'
   s.homepage    = 'https://github.com/duanruiying/DryAliyunOSS-iOS'
   s.license     = { :type => 'MIT', :file => 'LICENSE' }
